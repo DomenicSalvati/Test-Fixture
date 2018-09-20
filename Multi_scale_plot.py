@@ -80,8 +80,8 @@ def multiPlot(path):
     p1, = par1.plot(time1 ,temp1[0], color=color1,label="Fortus Temp")
     #p7, = par1.plot(time1 ,botTemp1[0], color=color4,label="Dual Nichrome Bottom Temp")
     p2, = host.plot(time1,force1[0],'--', color=color1, label="Fortus Force")
-    p3, = par1.plot(time2 *2,temp2[0], color=color2, label="Hybrid Temp")
-    p4, = host.plot(time2*2,force2[0],'--', color=color2, label="Hybrid Force")
+    p3, = par1.plot(time2,temp2[0], color=color2, label="Hybrid Temp")
+    p4, = host.plot(time,force2[0],'--', color=color2, label="Hybrid Force")
     p5, = par1.plot(time3,temp3[0], color=color3, label="25 mm HTM Temp")
     p6, = host.plot(time3,force3[0],'--', color=color3, label="25 mm HTM Force")
     
