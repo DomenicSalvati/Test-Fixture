@@ -22,13 +22,14 @@ import matplotlib.pyplot as plt
 #----------------------------------------------------------------------------------------------------
 
 def dataRipper(path):
+    global dirList
     lister = []
     directory = os.path.join(path)
     dirList = os.listdir(directory)
     dirList = sorted(dirList)
     for i in range(0,len(dirList)):
         if dirList[i].endswith(".csv"):
-            lister.append(i)        
+            lister.append(i)
     data = 0
     data = [np.genfromtxt(directory + dirList[lister[j]],delimiter=',') for j in range(len(lister))]
     return data,len(lister)
@@ -63,7 +64,7 @@ def timeFix(data):
 
 def Plotter(data,title,x,y,i):    
     dataTime = timeFix(data)
-    plt.plot(dataTime,data[0], label='Trial ' + str(i + 1))
+    plt.plot(dataTime,data[0], label=dirList[i])
     plt.xlabel(x)
     plt.ylabel(y)
     plt.title(title)
