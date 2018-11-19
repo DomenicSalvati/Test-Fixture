@@ -23,6 +23,7 @@ import matplotlib.pyplot as plt
 
 def dataRipper(path):
     global dirList
+    global lister
     lister = []
     directory = os.path.join(path)
     dirList = os.listdir(directory)
@@ -64,7 +65,7 @@ def timeFix(data):
 
 def Plotter(data,title,x,y,i):    
     dataTime = timeFix(data)
-    plt.plot(dataTime,data[0], label=dirList[i])
+    plt.plot(dataTime,data[0], label=dirList[lister[i]])
     plt.xlabel(x)
     plt.ylabel(y)
     plt.title(title)
