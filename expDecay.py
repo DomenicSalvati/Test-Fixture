@@ -28,17 +28,17 @@ def dataRipper(path):
 def smooth(dataUse,column):
     for i in range(0,len(dataUse[:,column])):
         if i < 3:
-            if abs(dataUse[i,column] -((dataUse[i+3,column] + dataUse[i+2,column] + dataUse[i+1,column]/3))) > 3: 
+            if abs(dataUse[i,column] -((dataUse[i+3,column] + dataUse[i+2,column] + dataUse[i+1,column]/3))) > 6: 
                 dataUse[i,column] = (dataUse[i+5,column] + dataUse[i+4,column])/2
                 if dataUse[i,column] > 600:
                     dataUse[i,column] = dataUse[i-1,column]
         elif i > len(dataUse[:,column]) - 6:
-            if abs(dataUse[i,column] -((dataUse[i-3,column] + dataUse[i-2,column] + dataUse[i-1,column]/3))) > 3:  
+            if abs(dataUse[i,column] -((dataUse[i-3,column] + dataUse[i-2,column] + dataUse[i-1,column]/3))) > 6:  
                 dataUse[i,column] = (dataUse[i-5,column] + dataUse[i-4,column])/2  
                 if dataUse[i,column] > 600:
                     dataUse[i,column] = dataUse[i-1,column]
         else:
-            if abs(dataUse[i,column] -((dataUse[i+3,column] + dataUse[i+2,column] + dataUse[i+1,column] + dataUse[i-1,column] + dataUse[i-2,column] + dataUse[i-3,column])/6)) > 3:
+            if abs(dataUse[i,column] -((dataUse[i+3,column] + dataUse[i+2,column] + dataUse[i+1,column] + dataUse[i-1,column] + dataUse[i-2,column] + dataUse[i-3,column])/6)) > 6:
                 dataUse[i,column] = (dataUse[i+5,column] + dataUse[i-5,column])/2
                 if dataUse[i,column] > 600:
                     dataUse[i,column] = dataUse[i-1,column]
@@ -60,20 +60,19 @@ def Plotter(data,title,x,y,i):
     plt.ylabel(y)
     plt.title(title)
     
-def func(x, a, b, c):
-    return a*np.exp(-b*x)+c
+def func(x, a, b, c, d,f):
+    return a*np.exp(-b*x)+ d*np.exp(-f * x) + c
     
 def lineFit(data,n):
     dataSmooth = smooth(data[0],1)
     t = timeFix(dataSmooth)
     coef,notCoef = curve_fit(func,t,dataSmooth[0])
-    print(str(coef[0]) + '              e^             ' + str(-coef[1]) + '       x         +     ' + str(coef[2]))
-    y = coef[0] * e**(-coef[1] * t) + coef[2]
+    y = coef[0] * e**(-coef[1] * t) + coef[3] * e**(-coef[4] * t) + coef[2]
     plt.plot(t,dataSmooth[0])
     plt.plot(t,y)
     plt.show()
     r = np.sqrt(np.diag(notCoef))
-    print(str(coef[0]) + '              e^             ' + str(-coef[1]) + '       x         +     ' + str(coef[2]))
+    print(str(coef[0]) + '              e^             ' + str(-coef[1]) + '       x         +     ' + str(coef[3]) + '              e^             ' + str(-coef[4]) + '       x         +     ' + str(coef[2]))
     print('r = ' + str(r))
 
 def expDecay(path):
