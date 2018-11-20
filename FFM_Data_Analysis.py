@@ -24,7 +24,6 @@ import matplotlib.pyplot as plt
 def dataRipper(path):
     global dirList
     global lister
-    global data
     lister = []
     directory = os.path.join(path)
     try:
