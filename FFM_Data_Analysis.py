@@ -24,15 +24,22 @@ import matplotlib.pyplot as plt
 def dataRipper(path):
     global dirList
     global lister
+    global data
     lister = []
     directory = os.path.join(path)
-    dirList = os.listdir(directory)
-    dirList = sorted(dirList)
-    for i in range(0,len(dirList)):
-        if dirList[i].endswith(".csv"):
-            lister.append(i)
-    data = 0
-    data = [np.genfromtxt(directory + dirList[lister[j]],delimiter=',') for j in range(len(lister))]
+    try:
+        dirList = os.listdir(directory)
+        dirList = sorted(dirList)
+        for i in range(0,len(dirList)):
+            if dirList[i].endswith(".csv"):
+                lister.append(i)
+        data = 0
+        data = [np.genfromtxt(directory + dirList[lister[j]],delimiter=',') for j in range(len(lister))]
+    except:
+        data = 0
+        data = [np.genfromtxt(directory,delimiter=',')]
+        lister = [0]
+
     return data,len(lister)
 
 def smooth(dataUse,column):
