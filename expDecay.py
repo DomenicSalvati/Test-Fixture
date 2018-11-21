@@ -4,6 +4,7 @@ import scipy as sp
 import numpy as np 
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
+import csv
 
 def dataRipper(path):
     global dirList
@@ -74,6 +75,9 @@ def lineFit(data,n):
     r = np.sqrt(np.diag(notCoef))
     print(str(coef[0]) + '              e^             ' + str(-coef[1]) + '       x         +     ' + str(coef[3]) + '              e^             ' + str(-coef[4]) + '       x         +     ' + str(coef[2]))
     print('r = ' + str(r))
+    with open('C:/Users/Domenic/desktop/work/pressure decay/DDS 3.csv', 'a', newline='') as csvfile:
+        writer = csv.writer(csvfile, delimiter=',')
+        writer.writerow(coef)
 
 def expDecay(path):
     data,n = dataRipper(path)
