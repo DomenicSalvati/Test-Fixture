@@ -35,6 +35,7 @@ def dataRipper(path):
         data = 0
         data = [np.genfromtxt(directory + dirList[lister[j]],delimiter=',') for j in range(len(lister))]
     except:
+        dirList = directory
         data = 0
         data = [np.genfromtxt(directory,delimiter=',')]
         lister = [0]
