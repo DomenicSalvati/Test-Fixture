@@ -54,28 +54,21 @@ def timeFix(data):
     return dataTime
 
 
-def Plotter(data,title,x,y,i):    
-    dataTime = timeFix(data)
-    plt.plot(dataTime,data[0], label=dirList[lister[i]])
-    plt.xlabel(x)
-    plt.ylabel(y)
-    plt.title(title)
-    
-def func(x, a, b, c, d,f):
-    return a*np.exp(-b*x)+ d*np.exp(-f * x) + c
+def func(x, a, b, c):
+    return a*np.exp(-b*x) + c
     
 def lineFit(data,n):
     dataSmooth = smooth(data[0],1)
     t = timeFix(dataSmooth)
     coef,notCoef = curve_fit(func,t,dataSmooth[0])
-    y = coef[0] * e**(-coef[1] * t) + coef[3] * e**(-coef[4] * t) + coef[2]
+    y = coef[0] * e**(-coef[1] * t) + coef[2]
     plt.plot(t,dataSmooth[0])
     plt.plot(t,y)
     plt.show()
     r = np.sqrt(np.diag(notCoef))
-    print(str(coef[0]) + '              e^             ' + str(-coef[1]) + '       x         +     ' + str(coef[3]) + '              e^             ' + str(-coef[4]) + '       x         +     ' + str(coef[2]))
+    print(str(coef[0]) + '              e^             ' + str(-coef[1]) + '       x         +     ' + str(coef[2]))
     print('r = ' + str(r))
-    with open('C:/Users/Domenic/desktop/work/pressure decay/DDS 3.csv', 'a', newline='') as csvfile:
+    with open('C:/Users/Domenic/desktop/work/pressure decay/retract 1.csv', 'a', newline='') as csvfile:
         writer = csv.writer(csvfile, delimiter=',')
         writer.writerow(coef)
 
