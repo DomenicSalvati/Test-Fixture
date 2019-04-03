@@ -115,7 +115,7 @@ def buttonHide(*args):
         plotButton.state(['disabled'])
 
 root = Tk()
-root.title("Domenic's Data Analysis Tool")
+root.title("Dom Plot")
 mainFrame = ttk.Frame(root, padding="3 3 12 12")
 mainFrame.grid(column=0, row=0, sticky=(N, W, E, S))
 root.columnconfigure(0, weight=1)
