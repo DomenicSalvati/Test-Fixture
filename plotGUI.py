@@ -16,6 +16,7 @@ from tkinter import filedialog
 # every data point so this function makes the time plotted represent the actual amount of time that passed.
 # Version 1.5
 # Change log:
+# Version 2.1: GUI will now let you plot multiple columns of the same data
 # Version 2.0: Now includes a GUI that makes plotting much easier
 # Version 1.5: Time is now correctly accounted for
 # Version 1.4: Files are sorted in alphabetical order now
@@ -74,10 +75,10 @@ def timeFix(data):
     return dataTime
     
 
-def Plotter(data,title,x,y,i):    
+def Plotter(data,title,x,y,i,k):    
     dataTime = timeFix(data)
     if isinstance(dirList, str):
-        plt.plot(dataTime,data[0])
+        plt.plot(dataTime,data[0], label=k)
         plt.xlabel(x)
         plt.ylabel(y)
         plt.title(title)
@@ -90,12 +91,15 @@ def Plotter(data,title,x,y,i):
     
 def returnPlot(path,title,xLabel,yLabel,c):
     data,n = dataRipper(path) 
-    for i in range(0,n):
-         smoothedHTMTemp = 0
-         smoothedHTMTemp = smooth(data[i],c)
-         Plotter(smoothedHTMTemp,title,xLabel,yLabel, i)
-    if not isinstance(dirList, str):
-        plt.legend()
+    c = c.replace(',', ' ')
+    c = c.split()
+    c = list(map(int, c))
+    for k in range(0,len(c)):
+        for i in range(0,n):
+             smoothedHTMTemp = 0
+             smoothedHTMTemp = smooth(data[i],c[k])
+             Plotter(smoothedHTMTemp,title,xLabel,yLabel,i,c[k])
+    plt.legend()
     plt.show()
 
     
@@ -149,7 +153,7 @@ ttk.Label(mainFrame, text="Y Label").grid(column=2, row=3, sticky=W)
 ttk.Label(mainFrame, text="Data Column").grid(column=2, row=4, sticky=W)
 
 global plotButton
-plotButton = ttk.Button(mainFrame, text="Plot", command=lambda: returnPlot(folderPath,title.get(),xLabel.get(),yLabel.get(),int(dataColumn.get())))
+plotButton = ttk.Button(mainFrame, text="Plot", command=lambda: returnPlot(folderPath,title.get(),xLabel.get(),yLabel.get(),dataColumn.get()))
 plotButton.grid(column=3, row=3, sticky=W)
 plotButton.state(['disabled'])
 
